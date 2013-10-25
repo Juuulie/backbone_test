@@ -17,7 +17,7 @@ define(["app"], function(ContactManager){
         "contacts": "listContacts",
         "contacts(?filter=:criterion)": "listContacts",
         "contacts/:id": "showContact",
-        "contacts/:id/edit": "editContact"
+        //"contacts/:id/edit": "editContact"
       }
     });
 
