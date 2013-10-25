@@ -4,6 +4,24 @@ define(["app", "tpl!apps/contacts/common/templates/form.tpl", "backbone.syphon"]
     Views.Form = Marionette.ItemView.extend({
       template: formTpl,
 
+      events: {
+        "click .js-submit": "submitForm",
+      },
+
+      submitForm: function(e){
+        e.preventDefault();
+      
+        var data = Backbone.Syphon.serialize(this);
+        // = à :
+        // var data = {
+        //   firstName : $('#contact-firstName').val();
+        // }
+        
+        //console.log(localStorage);
+        this.trigger("form:submit", data);
+
+      },
+
       onFormDataInvalid: function(errors){
         var $view = this.$el;
 

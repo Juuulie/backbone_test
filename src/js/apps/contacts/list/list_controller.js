@@ -72,11 +72,29 @@ define(["app", "apps/contacts/list/list_view"], function(ContactManager, View){
                     var view = new NewView.Contact({
                       model:newContact
                     });
+
+                    view.on("form:submit", function(data){
+
+                      // récupére l'id max
+                      var id_max = contacts.max(function(c){return c.id}).get('id');
+
+                      data.id = id_max +1; // objet
+                      newContact.save(data); // newContact = model
+                      
+                      contacts.add(data);
+
+                      view.trigger("dialog:close");
+
+                    });
+
+
                     // affichage du popup
                     ContactManager.dialogRegion.show(view); 
 
                   });
-                  console.log('code to add a new contact')
+                  console.log('code to add a new contact');
+
+                  // id max du localStorage
               });
 
               contactsListView.on("itemview:contact:edit", function(childView, model){
