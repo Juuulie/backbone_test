@@ -19,16 +19,23 @@ define(["app", "apps/contacts/list/list_view"], function(ContactManager, View){
                   var criterion = filterCriterion.toLowerCase();
                   
                   return function (contact){
-                    var firstName = contact.attributes.firstName.toLowerCase();
-                    var okFirstName = firstName.indexOf(criterion);
-                   
-                    var lastName = contact.attributes.lastName.toLowerCase();
-                    var okLastName = lastName.indexOf(criterion);
                     
-                    if(okFirstName == 0 || okLastName == 0){
-
+                    if(contact.get('firstName').toLowerCase().indexOf(criterion) != -1 || contact.get('lastName').toLowerCase().indexOf(criterion) != -1){
                       return contact;
                     }
+                   
+                    // = à :
+
+                    // var firstName = contact.get('firstName').toLowerCase();
+                    // var okFirstName = firstName.indexOf(criterion);
+                   
+                    // var lastName = contact.get('lastName').toLowerCase(); //contact.attributes.lastName.toLowerCase()
+                    // var okLastName = lastName.indexOf(criterion);
+
+                    // if(okFirstName == 0 || okLastName == 0){
+
+                    //   return contact;
+                    // }
 
                   }
                 }
@@ -85,6 +92,11 @@ define(["app", "apps/contacts/list/list_view"], function(ContactManager, View){
                   ContactManager.dialogRegion.show(view);
                 });
               });
+
+              contactsListView.on("itemview:contact:delete", function(childView, model){
+                model.destroy();
+              });
+
 
               ContactManager.mainRegion.show(contactsListLayout);
             });

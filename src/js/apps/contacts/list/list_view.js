@@ -19,7 +19,7 @@ define(["app",
       template: panelTpl,
 
       events: {
-        'submit #filter-form' : 'filterPersons' 
+        'submit #filter-form' : 'filterPersons',
       },
       // click new contact
       triggers:{
@@ -38,6 +38,12 @@ define(["app",
       onSetFilterCriterion: function(criterion){
         this.ui.criterion.val(criterion);
       },
+      deletePerson: function(){
+       // e.preventDefault(); // no submit
+
+        console.log('delete');
+
+      }
 
     });
 
@@ -46,9 +52,13 @@ define(["app",
       template: listItemTpl,
 
       events: {
-        "click": "highlightName"
+        "click": "highlightName",
+        'click .js-delete'    : 'deletePerson'        
       },
 
+      deletePerson: function(e){
+        this.trigger("contact:delete", this.model);
+      },
       flash: function(cssClass){
         var $view = this.$el;
         $view.hide().toggleClass(cssClass).fadeIn(800, function(){
