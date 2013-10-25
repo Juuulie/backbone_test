@@ -18,18 +18,27 @@ define(["app",
     View.Panel = Marionette.ItemView.extend({
       template: panelTpl,
 
+      events: {
+        'submit #filter-form' : 'filterPersons' 
+      },
       // click new contact
       triggers:{
-        'click button.js-new' : 'contact:new' 
+        'click button.js-new' : 'contact:new',
       },
 
       ui: {
         criterion: "input.js-filter-criterion"
       },
+      filterPersons: function(e){
+        e.preventDefault(); // no submit
 
+        // renvoie à filterFunction de list_controller.js
+        this.trigger("contacts:filter", $('.js-filter-criterion').val());
+      },
       onSetFilterCriterion: function(criterion){
         this.ui.criterion.val(criterion);
-      }
+      },
+
     });
 
     View.Contact = Marionette.ItemView.extend({
